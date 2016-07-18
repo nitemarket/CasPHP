@@ -2,7 +2,7 @@
 
 Clear and And Straight-forward PHP Webapp Framework
 
-It helps developers quickly write simple and powerful web application & APIs. Emphasizing in cleanliness and simplicity allows new learners understand the framework fast and start writing codes.
+It helps developers quickly write simple and powerful web application & APIs. Emphasizing in cleanliness and simplicity minimizes the duration of understanding framework and allows user start his first line of codes quickly.
 
 ### Features
 
@@ -45,6 +45,16 @@ Two steps are required to successfully run your web application on Google App En
     - url: /.*
       script: public_html/index.php
 
+## How can I contribute?
+
+* Fork it to become yours
+* Make your changes to improve
+* Submit pull request and let's discuss on your efforts
+* I will merge it as you rock it!
+
+## Credits
+
+* Slim Framework v2.6.1 (http://www.slimframework.com)
 
 ## License
 

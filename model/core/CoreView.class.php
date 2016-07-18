@@ -1,13 +1,9 @@
 <?php
 /**
- * Slim - a micro PHP 5 framework
+ * CasPHP - a PHP 5 framework
  *
- * @author      Josh Lockhart <info@slimframework.com>
- * @copyright   2011 Josh Lockhart
- * @link        http://www.slimframework.com
- * @license     http://www.slimframework.com/license
- * @version     2.6.1
- * @package     Slim
+ * @author      Cas Chan <casper_ccb@hotmail.com>
+ * @version     1.0.0
  *
  * MIT LICENSE
  *

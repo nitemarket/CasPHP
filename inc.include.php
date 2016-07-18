@@ -1,4 +1,13 @@
 <?php
+/**
+ * CasPHP - a PHP 5 framework
+ *
+ * @author      Cas Chan <casper_ccb@hotmail.com>
+ * @version     1.0.0
+ *
+ * MIT LICENSE
+ */
+
 basename($_SERVER["PHP_SELF"]) == 'inc.include.php' && exit('Invalid Access!');
 
 session_start();
