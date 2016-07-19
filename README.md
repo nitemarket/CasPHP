@@ -55,6 +55,7 @@ Two steps are required to successfully run your web application on Google App En
 ## Credits
 
 * Slim Framework v2.6.1 (http://www.slimframework.com)
+* Neo Wong
 
 ## License
 
