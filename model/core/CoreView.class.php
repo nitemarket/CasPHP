@@ -4,6 +4,7 @@
  *
  * @author      Cas Chan <casper_ccb@hotmail.com>
  * @version     1.0.0
+ * @credit      Slim Framework
  *
  * MIT LICENSE
  *

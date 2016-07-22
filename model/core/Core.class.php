@@ -3,7 +3,8 @@
  * CasPHP - a PHP 5 framework
  *
  * @author      Cas Chan <casper_ccb@hotmail.com>
- * @version     1.0.0
+ * @version     1.0.1
+ * @credit      Slim Framework
  *
  * MIT LICENSE
  *
@@ -199,9 +200,11 @@ class Core {
 				if ($key === 'HTTP_CONTENT_LENGTH') {
 					continue;
 				}
-				$env[$key] = $value;
+                $normalizedKey = $this->normalizeKey($key);
+				$headers[$normalizedKey] = $value;
 			}
 		}
+        $env['HEADER'] = array_merge($headers, getallheaders());
         
         return $env;
     }
@@ -356,6 +359,17 @@ class Core {
             return $this->cookies[$key];
         }
         return $this->cookies;
+    }
+    
+    public function getHeaders($key = null, $default = null){
+        $headers = $this->env['HEADER'];
+        if($key) {
+            if(array_key_exists($key, $headers)){
+                return $headers[$key];
+            }
+            return $default;
+        }
+        return $headers;
     }
     
     /********************************************************************************
@@ -533,6 +547,16 @@ class Core {
         $this->cleanBuffer();
         $this->setStatus($status);
         $this->write($message);
+    }
+    
+    protected function normalizeKey($key){
+        $key = strtolower($key);
+        $key = str_replace(array('-', '_'), ' ', $key);
+        $key = preg_replace('#^http #', '', $key);
+        $key = ucwords($key);
+        $key = str_replace(' ', '-', $key);
+
+        return $key;
     }
 }
 ?>
