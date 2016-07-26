@@ -1,6 +1,6 @@
 # CasPHP
 
-Clear and And Straight-forward PHP Webapp Framework
+Clear And Straight-forward PHP Webapp Framework
 
 It helps developers quickly write simple and powerful web application & APIs. Emphasizing in cleanliness and simplicity minimizes the duration of understanding framework and allows user start his first line of codes quickly.
 
