@@ -80,6 +80,117 @@ handlers:
   script: public_html/index.php
 </code></pre>
 
+<h3>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h3>
+
+<p>If you place the working directory <code>index.php</code> inside a folder in server root, re-define <code>WORK_DIR</code> with your <code>/folder-name</code>. For production environment, change <code>ENV</code> to <code>live</code>. Model-View-Controller (MVC) folder name are also allowed to change.</p>
+
+<p>/config/inc.config.php:</p>
+
+<pre><code>define('ENV', 'live');
+define('WORK_DIR', '/casphp');
+define('ROUTER_ROOT', M_ROOT.'/controller');
+define('MODEL_ROOT', M_ROOT.'/model');
+define('TEMPLATE_DIR_NAME', '/templates');
+define('TEMPLATE_TYPE', '/default');
+define('TEMPLATE_ASSET', '/_include');
+</code></pre>
+
+<h3>
+<a id="mvc-structure" class="anchor" href="#mvc-structure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MVC Structure</h3>
+
+<h4>
+<a id="controller" class="anchor" href="#controller" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Controller</h4>
+
+<p>Default sub-folder name and file name are <code>public</code> and <code>index</code> respectively. Child-config file that is located inside each sub-folder will be executed first. The file name must be same as its parent folder name <code>inc.sub-folder-name.php</code>.</p>
+
+<p>/controller/api/inc.api.php</p>
+
+<pre><code>try{
+    //config file that loads before main file
+}
+catch(exception $e){
+    switch($e-&gt;getCode()){
+        //bad request
+        default:
+            $app-&gt;setStatus('400');
+            echo $app-&gt;getMessageForCode('400');
+            break;
+    }
+
+    exit;
+}
+</code></pre>
+
+<p>/controller/api/index.php</p>
+
+<pre><code>$app-&gt;post('/login/:param', function ($param) use ($app) {
+    $header = $app-&gt;getHeaders(); //header data
+    $post = $app-&gt;postRequest(); //post data
+    $get = $app-&gt;getRequest(); //get data
+
+    $feedback = array(
+        'header' =&gt; $header,
+        'get' =&gt; $get,
+        'post' =&gt; $post,
+        'param' =&gt; $param,
+    );
+
+    $app-&gt;setStatus('200');
+    $app-&gt;contentType('application/json');
+    echo json_encode($feedback);
+});
+</code></pre>
+
+<h4>
+<a id="model" class="anchor" href="#model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Model</h4>
+
+<p>Classes must be registered via <code>spl_autoload_register</code> in root file <code>inc.include.php</code> to define its location. </p>
+
+<pre><code>spl_autoload_register(function ($class) {
+    $classname = strtolower($class);
+    if(strstr($classname, 'core') !== false){
+        $path = MODEL_ROOT . '/core';
+        include($path . '/' . $class . '.class.php');
+    }
+    elseif(strstr($classname, 'util') !== false){
+        $path = MODEL_ROOT . '/util';
+        include($path . '/' . $class . '.class.php');
+    }
+});
+</code></pre>
+
+<h4>
+<a id="view" class="anchor" href="#view" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>View</h4>
+
+<p>Templates are accessible via controller file. <code>TEMPLATE_TYPE</code> (<a href="https://github.com/see" class="user-mention">@see</a> Configuration) can be used to separate your template version.</p>
+
+<p>By default, <code>TEMPLATE_DIR_NAME</code> and <code>TEMPLATE_TYPE</code> are set <code>/templates</code> and <code>/default</code> respectively and the file path will be <code>/root/templates/default</code>.</p>
+
+<pre><code>$app-&gt;notFound(function () use ($app) {
+    $app-&gt;render('/404.html'); //relative path
+});
+
+$app-&gt;get('/', function () use ($app) {
+    $app-&gt;render('/public/index.html'); //relative path
+});
+</code></pre>
+
+<p><code>&lt;%include_path%&gt;</code> is used to substitute the absolute path of assets. <code>TEMPLATE_ASSET</code> (<a href="https://github.com/see" class="user-mention">@see</a> Configuration) is changeable for different folder name.</p>
+
+<pre><code>&lt;script src="&lt;%include_path%&gt;/js/main.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<p><code>&lt;%%template-path%%&gt;</code> is used to nest more template files together in order to effectively re-use the same template. It uses underscore (_) to separate the directory level.</p>
+
+<pre><code>&lt;%%public_include_document-head.html%%&gt;
+&lt;%%public_include_header.html%%&gt;
+&lt;div class="container"&gt;
+    Hi CasPHP
+&lt;/div&gt;
+&lt;%%public_include_footer.html%%&gt;
+</code></pre>
+
 <h2>
 <a id="how-can-i-contribute" class="anchor" href="#how-can-i-contribute" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How can I contribute?</h2>
 
