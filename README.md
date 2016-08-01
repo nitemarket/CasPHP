@@ -63,7 +63,7 @@ If you place the working directory `index.php` inside a folder in server root, r
 
 #### Controller
 
-Default sub-folder name and file name are `public` and `index` respectively. Child-config file that is located inside each sub-folder will be executed first. The file name must be same as its parent folder name `inc.sub-folder-name.php`.
+Default sub-folder name and file name are `public` and `index` respectively. Child-config file that is located inside each sub-folder will be executed first before controller script. The file name must follow its parent folder name.
 
 /controller/api/inc.api.php
 
@@ -116,10 +116,12 @@ Classes must be registered via `spl_autoload_register` in root file `inc.include
             include($path . '/' . $class . '.class.php');
         }
     });
+    
+    $core =  new Core();
 
 #### View
 
-Templates are accessible via controller file. `TEMPLATE_TYPE` (@see Configuration) can be used to separate your template version.
+Templates are accessible via controller file. `TEMPLATE_TYPE` (@see Configuration) is used to separate your template version.
 
 By default, `TEMPLATE_DIR_NAME` and `TEMPLATE_TYPE` are set `/templates` and `/default` respectively and the file path will be `/root/templates/default`.
     
