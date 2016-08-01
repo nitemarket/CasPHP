@@ -102,7 +102,7 @@ define('TEMPLATE_ASSET', '/_include');
 <h4>
 <a id="controller" class="anchor" href="#controller" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Controller</h4>
 
-<p>Default sub-folder name and file name are <code>public</code> and <code>index</code> respectively. Child-config file that is located inside each sub-folder will be executed first. The file name must be same as its parent folder name <code>inc.sub-folder-name.php</code>.</p>
+<p>Default sub-folder name and file name are <code>public</code> and <code>index</code> respectively. Child-config file that is located inside each sub-folder will be executed first before controller script. The file name must follow its parent folder name.</p>
 
 <p>/controller/api/inc.api.php</p>
 
@@ -158,12 +158,14 @@ catch(exception $e){
         include($path . '/' . $class . '.class.php');
     }
 });
+
+$core =  new Core();
 </code></pre>
 
 <h4>
 <a id="view" class="anchor" href="#view" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>View</h4>
 
-<p>Templates are accessible via controller file. <code>TEMPLATE_TYPE</code> (<a href="https://github.com/see" class="user-mention">@see</a> Configuration) can be used to separate your template version.</p>
+<p>Templates are accessible via controller file. <code>TEMPLATE_TYPE</code> (<a href="https://github.com/see" class="user-mention">@see</a> Configuration) is used to separate your template version.</p>
 
 <p>By default, <code>TEMPLATE_DIR_NAME</code> and <code>TEMPLATE_TYPE</code> are set <code>/templates</code> and <code>/default</code> respectively and the file path will be <code>/root/templates/default</code>.</p>
 
