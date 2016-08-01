@@ -15,6 +15,7 @@ define('ROUTER_ROOT', M_ROOT.'/controller');
 define('MODEL_ROOT', M_ROOT.'/model');
 define('TEMPLATE_DIR_NAME', '/templates');
 define('TEMPLATE_TYPE', '/default');
+define('TEMPLATE_ASSET', '/_include');
 define('TEMPLATE_PATH', M_ROOT.TEMPLATE_DIR_NAME.TEMPLATE_TYPE);
 define('TEMPLATE_URL', M_URL.TEMPLATE_DIR_NAME.TEMPLATE_TYPE);
 define('FILE_ROOT', M_ROOT.'/public/files'); //cpanel

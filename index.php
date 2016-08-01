@@ -13,7 +13,6 @@ require_once("inc.include.php");
 $app = new Core();
 
 $app->notFound(function () use ($app) {
-//    echo '404 Not Found';
     $app->render('/404.html');
 });
 

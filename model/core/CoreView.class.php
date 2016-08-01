@@ -33,7 +33,6 @@ class CoreView {
     
 	protected $default_template = array('404.html');
     protected $templatesDirectory;
-    protected $includeFolder = '_include';
     protected $includeTagPattern = '/<%%([\w\-\_]+)\.(\w+)?%%>/';
     
     protected $javascriptSRCTags = array();
@@ -42,7 +41,7 @@ class CoreView {
 	
 	public function __construct(){
 		$this->templatesDirectory = TEMPLATE_PATH;
-        $this->includeURL = TEMPLATE_URL . '/' . $this->includeFolder;
+        $this->includeURL = TEMPLATE_URL . TEMPLATE_ASSET;
 		
 	}
     

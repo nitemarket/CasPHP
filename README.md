@@ -45,6 +45,105 @@ Two steps are required to successfully run your web application on Google App En
     - url: /.*
       script: public_html/index.php
 
+### Configuration
+
+If you place the working directory `index.php` inside a folder in server root, re-define `WORK_DIR` with your `/folder-name`. For production environment, change `ENV` to `live`. Model-View-Controller (MVC) folder name are also allowed to change.
+
+/config/inc.config.php:
+
+    define('ENV', 'live');
+    define('WORK_DIR', '/casphp');
+    define('ROUTER_ROOT', M_ROOT.'/controller');
+    define('MODEL_ROOT', M_ROOT.'/model');
+    define('TEMPLATE_DIR_NAME', '/templates');
+    define('TEMPLATE_TYPE', '/default');
+    define('TEMPLATE_ASSET', '/_include');
+    
+### MVC Structure
+
+#### Controller
+
+Default sub-folder name and file name are `public` and `index` respectively. Child-config file that is located inside each sub-folder will be executed first. The file name must be same as its parent folder name `inc.sub-folder-name.php`.
+
+/controller/api/inc.api.php
+
+    try{
+        //config file that loads before main file
+    }
+    catch(exception $e){
+        switch($e->getCode()){
+            //bad request
+            default:
+                $app->setStatus('400');
+                echo $app->getMessageForCode('400');
+                break;
+        }
+
+        exit;
+    }
+    
+/controller/api/index.php
+
+    $app->post('/login/:param', function ($param) use ($app) {
+        $header = $app->getHeaders(); //header data
+        $post = $app->postRequest(); //post data
+        $get = $app->getRequest(); //get data
+    
+        $feedback = array(
+            'header' => $header,
+            'get' => $get,
+            'post' => $post,
+            'param' => $param,
+        );
+        
+        $app->setStatus('200');
+        $app->contentType('application/json');
+        echo json_encode($feedback);
+    });
+
+#### Model
+
+Classes must be registered via `spl_autoload_register` in root file `inc.include.php` to define its location. 
+
+    spl_autoload_register(function ($class) {
+        $classname = strtolower($class);
+        if(strstr($classname, 'core') !== false){
+            $path = MODEL_ROOT . '/core';
+            include($path . '/' . $class . '.class.php');
+        }
+        elseif(strstr($classname, 'util') !== false){
+            $path = MODEL_ROOT . '/util';
+            include($path . '/' . $class . '.class.php');
+        }
+    });
+
+#### View
+
+Templates are accessible via controller file. `TEMPLATE_TYPE` (@see Configuration) can be used to separate your template version.
+
+By default, `TEMPLATE_DIR_NAME` and `TEMPLATE_TYPE` are set `/templates` and `/default` respectively and the file path will be `/root/templates/default`.
+    
+    $app->notFound(function () use ($app) {
+        $app->render('/404.html'); //relative path
+    });
+    
+    $app->get('/', function () use ($app) {
+        $app->render('/public/index.html'); //relative path
+    });
+    
+`<%include_path%>` is used to substitute the absolute path of assets. `TEMPLATE_ASSET` (@see Configuration) is changeable for different folder name.
+
+    <script src="<%include_path%>/js/main.js"></script>
+    
+`<%%template-path%%>` is used to nest more template files together in order to effectively re-use the same template. It uses underscore (_) to separate the directory level.
+    
+    <%%public_include_document-head.html%%>
+    <%%public_include_header.html%%>
+    <div class="container">
+        Hi CasPHP
+    </div>
+    <%%public_include_footer.html%%>
+
 ## How can I contribute?
 
 * Fork it to become yours
