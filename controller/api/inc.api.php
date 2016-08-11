@@ -7,11 +7,12 @@ catch(exception $e){
     switch($e->getCode()){
         //bad request
         default:
-            $app->setStatus('400');
-            echo $app->getMessageForCode('400');
+            $error = 400;
+            $errormsg = $app->getMessageForCode(400);
             break;
     }
     
+    $app->terminate($error, $errormsg);
     exit;
 }
 

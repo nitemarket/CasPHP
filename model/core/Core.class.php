@@ -450,31 +450,8 @@ class Core {
     
     public function run(){
         $this->initialize();
-        
         $this->call();
-        
-        list($status, $headers, $body) = $this->finalize();
-        
-        if (headers_sent() === false) {
-            //Send status
-            if (strpos(PHP_SAPI, 'cgi') === 0) {
-                header(sprintf('Status: %s', $this->getMessageForCode($status)));
-            } else {
-                header(sprintf('HTTP/%s %s', $this->settings['http.version'], $this->getMessageForCode($status)));
-            }
-
-            //Send headers
-            foreach ($headers as $name => $value) {
-                $hValues = explode("\n", $value);
-                foreach ($hValues as $hVal) {
-                    header("$name: $hVal", false);
-                }
-            }
-        }
-        
-        if (!$this->isHead()) {
-            echo $body;
-        }
+        $this->output();
     }
     
     public function call(){
@@ -499,6 +476,37 @@ class Core {
             $this->write(ob_get_clean());
         }
         catch (Exception $e) {
+        }
+    }
+    
+    public function terminate($status, $message){
+        $this->initialize();
+        $this->halt($status, $message);
+        $this->output();
+    }
+    
+    public function output(){
+        list($status, $headers, $body) = $this->finalize();
+        
+        if (headers_sent() === false) {
+            //Send status
+            if (strpos(PHP_SAPI, 'cgi') === 0) {
+                header(sprintf('Status: %s', $this->getMessageForCode($status)));
+            } else {
+                header(sprintf('HTTP/%s %s', $this->settings['http.version'], $this->getMessageForCode($status)));
+            }
+
+            //Send headers
+            foreach ($headers as $name => $value) {
+                $hValues = explode("\n", $value);
+                foreach ($hValues as $hVal) {
+                    header("$name: $hVal", false);
+                }
+            }
+        }
+        
+        if (!$this->isHead()) {
+            echo $body;
         }
     }
     
