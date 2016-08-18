@@ -440,7 +440,7 @@ class Core {
     }
     
     public function prefetch($template, $data = array()){
-        $this->view->appendData($data);
+        $this->view->resetData($data);
         return $this->view->prefetch($template);
     }
     

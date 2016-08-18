@@ -71,6 +71,11 @@ class CoreView {
         }
     }
     
+    public function resetData($data){
+        $this->data = array();
+        $this->appendData($data);
+    }
+    
     public function getData($key){
         return $this->data[$key];
     }
