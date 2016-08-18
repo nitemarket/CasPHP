@@ -127,7 +127,7 @@ class Core {
 		
 		$this->settings = array_merge(static::getDefaultSettings(), $userSettings);
         $this->env = $this->getEnvironmentVariable();
-        $this->cookies = Util::stripSlashesIfMagicQuotes($_COOKIE);
+        $this->cookies = $this->retrieveHTTPCookies();
         
         $this->router = new CoreRouter();
 		$this->view = new CoreView();
@@ -372,6 +372,14 @@ class Core {
         return $headers;
     }
     
+    public function retrieveHTTPCookies(){
+        $cookies = $this->parseCookieHeader($_SERVER['HTTP_COOKIE']);
+        if(!$cookies){
+            $cookies = Util::stripSlashesIfMagicQuotes($_COOKIE);
+        }
+        return $cookies;
+    }
+    
     /********************************************************************************
     * Response Methods
     *******************************************************************************/
@@ -408,9 +416,13 @@ class Core {
     }
     
     public function initialize($body = '', $status = 200, $headers = array('Content-Type' => 'text/html')){
-        $this->setStatus($status);
-        foreach ($headers as $key => $value) {
-            $this->headers[$key] = $value;
+        if(!$this->status){
+            $this->setStatus($status);
+        }
+        if(!$this->headers){
+            foreach ($headers as $key => $value) {
+                $this->headers[$key] = $value;
+            }
         }
         $this->write($body);
     }
@@ -479,10 +491,11 @@ class Core {
         }
     }
     
-    public function terminate($status, $message){
+    public function terminate($status, $message = ''){
         $this->initialize();
         $this->halt($status, $message);
         $this->output();
+        exit;
     }
     
     public function output(){
@@ -565,6 +578,24 @@ class Core {
         $key = str_replace(' ', '-', $key);
 
         return $key;
+    }
+    
+    public static function parseCookieHeader($header){
+        $cookies = array();
+        $header = rtrim($header, "\r\n");
+        $headerPieces = preg_split('@\s*[;,]\s*@', $header);
+        foreach ($headerPieces as $c) {
+            $cParts = explode('=', $c, 2);
+            if (count($cParts) === 2) {
+                $key = urldecode($cParts[0]);
+                $value = urldecode($cParts[1]);
+                if (!isset($cookies[$key])) {
+                    $cookies[$key] = $value;
+                }
+            }
+        }
+
+        return $cookies;
     }
 }
 ?>
