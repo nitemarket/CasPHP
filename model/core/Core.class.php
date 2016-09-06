@@ -204,7 +204,7 @@ class Core {
 				$headers[$normalizedKey] = $value;
 			}
 		}
-        $env['HEADER'] = array_merge($headers, getallheaders());
+        $env['HEADER'] = $headers;
         
         return $env;
     }
