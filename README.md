@@ -146,6 +146,39 @@ By default, `TEMPLATE_DIR_NAME` and `TEMPLATE_TYPE` are set `/templates` and `/d
     </div>
     <%%public_include_footer.html%%>
 
+## Amazon Web Service (AWS)
+
+### AWS Simple Storage Service (S3)
+
+### Configuration
+
+/config/inc.config.php:
+
+    $vars['aws']['s3']['bucket_name'] = '### BUCKET NAME ###';
+    $vars['aws']['s3']['aws_access_key_id'] = '### ACCESS KEY ID ###'; //for production
+    $vars['aws']['s3']['aws_secret_access_key'] = '### ACCESS KEY ###'; //for production
+    $vars['aws']['s3']['profile'] = 'default'; ### CREDENTIALS PROFILE ### //for development
+    
+For local development stage, store your AWS credentials data `/.aws/credentials` outside your working root directory to prevent your access key from being accidentally commited into remote repository. Refer [AWS documentation](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-config-files).
+
+    [default]
+    aws_access_key_id = AKIAI3FKB47C5RWDTJFQ
+    aws_secret_access_key = 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
+
+Configuration `PHP.ini`:
+
+    ; Default Value: "EGPCS"
+    ; Development Value: "GPCS"
+    ; Production Value: "GPCS";
+    ; http://php.net/variables-order
+    variables_order = "EGPCS"
+
+***Note**: For windows 10 users, please place your credentials data `/.aws/credentials` in public HOMEPATH `/Users/public` instead of `/Users/{username}`.
+
+### Usage
+
+Examples are included in `/controller`.
+
 ## How can I contribute?
 
 * Fork it to become yours

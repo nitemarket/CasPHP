@@ -11,6 +11,7 @@
 require_once("inc.include.php");
 
 $app = new Core();
+$system = new System();
 
 $app->notFound(function () use ($app) {
     $app->render('/404.html');

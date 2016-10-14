@@ -35,3 +35,8 @@ $vars["dbi"]["name"]="database";
 $vars["dbi"]["user"]="root";
 $vars["dbi"]["pass"]="";
 $vars["dbi"]["prefix"]="ex_";
+
+$vars['aws']['s3']['bucket_name'] = '';
+$vars['aws']['s3']['aws_access_key_id'] = '';
+$vars['aws']['s3']['aws_secret_access_key'] = '';
+$vars['aws']['s3']['profile'] = 'default';
