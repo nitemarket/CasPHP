@@ -162,8 +162,8 @@ By default, `TEMPLATE_DIR_NAME` and `TEMPLATE_TYPE` are set `/templates` and `/d
 For local development stage, store your AWS credentials data `/.aws/credentials` outside your working root directory to prevent your access key from being accidentally commited into remote repository. Refer [AWS documentation](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-config-files).
 
     [default]
-    aws_access_key_id = AKIAI3FKB47C5RWDTJFQ
-    aws_secret_access_key = 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
+    aws_access_key_id = ### ACCESS KEY ID ###
+    aws_secret_access_key = ### ACCESS KEY ###
 
 Configuration `PHP.ini`:
 
