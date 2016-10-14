@@ -194,6 +194,46 @@ $app-&gt;get('/', function () use ($app) {
 </code></pre>
 
 <h2>
+<a id="amazon-web-service-aws" class="anchor" href="#amazon-web-service-aws" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Amazon Web Service (AWS)</h2>
+
+<h3>
+<a id="aws-simple-storage-service-s3" class="anchor" href="#aws-simple-storage-service-s3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>AWS Simple Storage Service (S3)</h3>
+
+<h3>
+<a id="configuration-1" class="anchor" href="#configuration-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h3>
+
+<p>/config/inc.config.php:</p>
+
+<pre><code>$vars['aws']['s3']['bucket_name'] = '### BUCKET NAME ###';
+$vars['aws']['s3']['aws_access_key_id'] = '### ACCESS KEY ID ###'; //for production
+$vars['aws']['s3']['aws_secret_access_key'] = '### ACCESS KEY ###'; //for production
+$vars['aws']['s3']['profile'] = 'default'; ### CREDENTIALS PROFILE ### //for development
+</code></pre>
+
+<p>For local development stage, store your AWS credentials data <code>/.aws/credentials</code> outside your working root directory to prevent your access key from being accidentally commited into remote repository. Refer <a href="http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-config-files">AWS documentation</a>.</p>
+
+<pre><code>[default]
+aws_access_key_id = ### ACCESS KEY ID ###
+aws_secret_access_key = ### ACCESS KEY ###
+</code></pre>
+
+<p>Configuration <code>PHP.ini</code>:</p>
+
+<pre><code>; Default Value: "EGPCS"
+; Development Value: "GPCS"
+; Production Value: "GPCS";
+; http://php.net/variables-order
+variables_order = "EGPCS"
+</code></pre>
+
+<p><em>**Note</em>*: For windows 10 users, please place your credentials data <code>/.aws/credentials</code> in public HOMEPATH <code>/Users/public</code> instead of <code>/Users/{username}</code>.</p>
+
+<h3>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h3>
+
+<p>Examples are included in <code>/controller</code>.</p>
+
+<h2>
 <a id="how-can-i-contribute" class="anchor" href="#how-can-i-contribute" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How can I contribute?</h2>
 
 <ul>
