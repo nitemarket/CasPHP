@@ -17,7 +17,7 @@ abstract class Storage implements StorageInter{
         if(!$this->_media_path){
             $log = "Invalid media path for storage";
             $error_code = $method_code.'001';
-        	throw new Exception($log, $error_code);
+        	throw new Xception($log, $error_code);
         }
     }
 	

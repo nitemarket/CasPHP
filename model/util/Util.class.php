@@ -81,7 +81,7 @@ class Util {
 	}
     
     public static function generateRandomCode($length=32, $type="mix"){
-		$method_code = '0006';
+		$method_code = '0008';
 		$num		= "1234567890";
 		$alpha		= "abcdefghjkmnpqrstuvwxyz";
 		$mix		= "$alpha$num";

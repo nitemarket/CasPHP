@@ -204,7 +204,7 @@ class Core {
 				$headers[$normalizedKey] = $value;
 			}
 		}
-        $env['HEADER'] = $headers;
+        $env['HEADER'] = function_exists('getallheaders') ? array_merge($headers, getallheaders()) : $headers;
         
         return $env;
     }
@@ -410,9 +410,9 @@ class Core {
         return $this->body;
     }
     
-    public function redirect($url, $status = 302){
+    public function redirect($url = false, $status = 302){
         $this->setStatus($status);
-        $this->headers['Location'] = $url;
+        $this->headers['Location'] = M_URL . ($url ? '/' . ltrim($url, '/') : '');
     }
     
     public function initialize($body = '', $status = 200, $headers = array('Content-Type' => 'text/html')){

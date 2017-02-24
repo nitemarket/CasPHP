@@ -3,7 +3,7 @@
  * CasPHP - a PHP 5 framework
  *
  * @author      Cas Chan <casper_ccb@hotmail.com>
- * @version     1.0.0
+ * @version     1.0.1
  *
  * MIT LICENSE
  */
