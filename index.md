@@ -1,6 +1,8 @@
 ## Introduction
 
-Clear And Straight-forward PHP Webapp Framework
+ver. 1.0.1
+
+**C**lear **A**nd **S**traight-forward **PHP** Webapp Framework
 
 It helps developers quickly write simple and powerful web application & APIs. Emphasizing in cleanliness and simplicity minimizes the duration of understanding framework and allows user start his first line of codes quickly.
 
@@ -65,6 +67,8 @@ If you place the working directory `index.php` inside a folder in server root, r
 
 Default sub-folder name and file name are `public` and `index` respectively. Child-config file that is located inside each sub-folder will be executed first before controller script. The file name must follow its parent folder name.
 
+For example below, `inc.api.php` is located inside folder `api`. When browser client sends `POST` to `http://localhost/api/login/param`, system will first run config file `/api/inc.api.php` (if exists) then proceed to controller file `/api/index.php` (if `/inc/login.php` doesn't exist otherwise it will be called).
+
 /controller/api/inc.api.php
 
     try{
@@ -103,7 +107,7 @@ Default sub-folder name and file name are `public` and `index` respectively. Chi
 
 #### Model
 
-Classes must be registered via `spl_autoload_register` in root file `inc.include.php` to define its location. 
+Classes must be registered via `spl_autoload_register` in root file `inc.include.php` to define its location. Folder and file name can be configured and modify codes to match the new name.
 
     spl_autoload_register(function ($class) {
         $classname = strtolower($class);
@@ -117,7 +121,8 @@ Classes must be registered via `spl_autoload_register` in root file `inc.include
         }
     });
     
-    $core =  new Core();
+    //use class
+    $core = new Core();
 
 #### View
 
@@ -129,28 +134,39 @@ By default, `TEMPLATE_DIR_NAME` and `TEMPLATE_TYPE` are set `/templates` and `/d
         $app->render('/404.html'); //relative path
     });
     
-    $app->get('/', function () use ($app) {
-        $app->render('/public/index.html'); //relative path
+    $app->post('/', function() use ($app) {
+    	$app->contentType('application/json');
+    	echo json_encode($app->postRequest()); //output json
     });
     
-`<%include_path%>` is used to substitute the absolute path of assets. `TEMPLATE_ASSET` (@see Configuration) is changeable for different folder name.
+    $app->get('/', function () use ($app) {
+    	$data['title'] = 'Hello World';
+        $app->render('/public/index.html', $data); //pass data to template
+    });
 
-    <script src="<%include_path%>/js/main.js"></script>
-    
 `<%%template-path%%>` is used to nest more template files together in order to effectively re-use the same template. It uses underscore (_) to separate the directory level.
+
+Data that is passed from controller can be retrieved by prepending double underscore (__) in front.
     
     <%%public_include_document-head.html%%>
     <%%public_include_header.html%%>
     <div class="container">
         Hi CasPHP
+        
+        <?php echo $__title; //passed from controller ?>
     </div>
     <%%public_include_footer.html%%>
+    
+`<%include_path%>` is used to substitute the absolute path of assets. `TEMPLATE_ASSET` (@see Configuration) is changeable for different folder name.
 
-## Amazon Web Service (AWS)
+    <script src="<%include_path%>/js/main.js"></script>
+    
+
+## Features
 
 ### AWS Simple Storage Service (S3)
 
-### Configuration
+#### Configuration
 
 /config/inc.config.php:
 
@@ -175,9 +191,15 @@ Configuration `PHP.ini`:
 
 ***Note**: For windows 10 users, please place your credentials data `/.aws/credentials` in public HOMEPATH `/Users/public` instead of `/Users/{username}`.
 
-### Usage
+## Further development
 
-Examples are included in `/controller`.
+More features (we called it model class) are coming. Stay tuned or you can build yours!
+
+* Database connection model
+* Account signin, signup & signout
+* Debug feature
+* Mail feature - Sendgrid & third party plugin
+* Cron implementation
 
 ## How can I contribute?
 
@@ -189,7 +211,7 @@ Examples are included in `/controller`.
 ## Credits
 
 * Slim Framework v2.6.1 (http://www.slimframework.com)
-* Neo Wong
+* Neo Wong - framework architecture
 
 ## License
 
