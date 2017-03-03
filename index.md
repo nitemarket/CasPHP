@@ -1,6 +1,6 @@
 ## Introduction
 
-ver. 1.0.1
+ver. 1.0.2
 
 **C**lear **A**nd **S**traight-forward **PHP** Webapp Framework
 
@@ -45,9 +45,14 @@ Two steps are required to successfully run your web application on Google App En
     handlers:
     # ...
     - url: /.*
-      script: public_html/index.php
+      script: index.php
+      
+    - url: /templates/default/_include
+      static_dir: templates/default/_include
 
 ### Configuration
+
+#### General
 
 If you place the working directory `index.php` inside a folder in server root, re-define `WORK_DIR` with your `/folder-name`. For production environment, change `ENV` to `live`. Model-View-Controller (MVC) folder name are also allowed to change.
 
@@ -61,6 +66,20 @@ If you place the working directory `index.php` inside a folder in server root, r
     define('TEMPLATE_TYPE', '/default');
     define('TEMPLATE_ASSET', '/_include');
     
+#### Database
+
+MySQL is currently the default database of the framework. Setup connection settings if your application requires database to work with.
+
+	#####DATABASE
+    $vars["dbi"]["host"]="localhost";
+    $vars["dbi"]["port"]="";
+    $vars["dbi"]["name"]="casphp";
+    $vars["dbi"]["user"]="root";
+    $vars["dbi"]["pass"]="";
+    $vars["dbi"]["prefix"]="cs_";
+    
+    $db = SiteDatabase::instance();
+
 ### MVC Structure
 
 #### Controller
