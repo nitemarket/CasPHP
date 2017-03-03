@@ -31,10 +31,10 @@ $vars["debug"] = true;
 #####DATABASE
 $vars["dbi"]["host"]="localhost";
 $vars["dbi"]["port"]="";
-$vars["dbi"]["name"]="database";
+$vars["dbi"]["name"]="casphp";
 $vars["dbi"]["user"]="root";
 $vars["dbi"]["pass"]="";
-$vars["dbi"]["prefix"]="ex_";
+$vars["dbi"]["prefix"]="cs_";
 
 $vars['aws']['s3']['bucket_name'] = '';
 $vars['aws']['s3']['aws_access_key_id'] = '';

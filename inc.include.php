@@ -18,6 +18,7 @@ require_once(MODEL_ROOT . '/aws/aws-autoloader.php');
 $_error_report_code = $vars['debug'] ? E_ALL & ~E_NOTICE & ~E_DEPRECATED : 0;
 error_reporting($_error_report_code);
 
+require_once(MODEL_ROOT.'/db/Database.model.php');
 spl_autoload_register(function ($class) {
 	$classname = strtolower($class);
     if(strstr($classname, 'core') !== false){

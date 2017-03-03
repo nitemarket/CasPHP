@@ -3,7 +3,7 @@
  * CasPHP - a PHP 5 framework
  *
  * @author      Cas Chan <casper_ccb@hotmail.com>
- * @version     1.0.1
+ * @version     1.0.2
  * @credit      Slim Framework
  *
  * MIT LICENSE
@@ -469,6 +469,7 @@ class Core {
     public function call(){
         try{
             ob_start();
+            $error = '';
             $dispatched = false;
             $matchedRoutes = $this->router->getMatchedRoutes($this->getMethod(), $this->env['PATH_INFO']);
             foreach ($matchedRoutes as $route) {
@@ -478,11 +479,12 @@ class Core {
                         break;
                     }
                 } catch (Exception $e) {
+                    $error = $e->getMessage();
                     continue;
                 }
             }
             if (!$dispatched) {
-                $this->notFound();
+                $this->notFound($error);
             }
             
             $this->write(ob_get_clean());
@@ -533,7 +535,7 @@ class Core {
         } else {
             ob_start();
             if (is_callable($this->notFound)) {
-                call_user_func($this->notFound);
+                call_user_func($this->notFound, $callable);
             } else {
                 call_user_func(array($this, 'defaultNotFound'));
             }

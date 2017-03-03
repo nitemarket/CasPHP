@@ -2,7 +2,6 @@
 
 $app->get('/', function () use ($app) {
     $app->render('/public/index.html');
-    
 });
 
 $app->get('/:name', function ($name) use ($app) {
